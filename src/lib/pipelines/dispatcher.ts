@@ -1,4 +1,5 @@
 import { startConversationRun } from "@/lib/agents/conversation-runner";
+import { DATA_DIR } from "@/lib/storage/path-utils";
 import { resolveInputs, resolveTemplate } from "./template";
 import type { StageDefinition, PipelineRun, PipelineDefinition } from "./types";
 
@@ -96,7 +97,7 @@ export async function dispatchStage(
         title: `[${run.pipeline}] ${stageDef.name} — ${agent.focus}`,
         trigger: "job",
         prompt,
-        cwd: run.targetRepo,
+        cwd: DATA_DIR,
       });
       results.push({ conversationId: meta.id, agentSlug: assignee });
     }
@@ -113,7 +114,7 @@ export async function dispatchStage(
     title: `[${run.pipeline}] ${stageDef.name}`,
     trigger: "job",
     prompt,
-    cwd: run.targetRepo,
+    cwd: DATA_DIR,
   });
 
   return [{ conversationId: meta.id, agentSlug: assignee }];
